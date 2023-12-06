@@ -61,7 +61,9 @@ public class Day6 {
         long part1 = Race.totalWaysToBeatRecord(Race.parse(input));
         System.out.println("day 6 part 1: " + part1);
         
-        long part2 = new Race(48989083, 390110311121360L).numWaysToBeat();
+        long milliseconds = Long.parseLong(input.split("\n")[0].replaceAll("\\s*", "").split(":")[1]);
+        long recordMillimeters = Long.parseLong(input.split("\n")[1].replaceAll("\\s*", "").split(":")[1]);
+        long part2 = new Race(milliseconds, recordMillimeters).numWaysToBeat();
         System.out.println("day 6 part 2: " + part2);
     }
 }
