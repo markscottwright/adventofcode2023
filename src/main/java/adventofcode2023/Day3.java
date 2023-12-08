@@ -140,9 +140,9 @@ public class Day3 {
         var schematic = Schematic.parse(Files.readString(Path.of("testdata/day3.dat")));
         long part1 = schematic.getNumberRuns().stream().filter(NumberRun::isAdjacentToSymbol)
                 .mapToLong(NumberRun::getValue).sum();
-        System.out.println("day 3 part 1:" + part1);
+        System.out.println("day 3 part 1: " + part1);
         
         long part2= schematic.getGearRatios().stream().mapToLong(v -> v).sum();
-        System.out.println("day 3 part 2:" + part2);
+        System.out.println("day 3 part 2: " + part2);
     }
 }
