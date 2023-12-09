@@ -22,21 +22,8 @@ public class Day9 {
         }
 
         public int nextValue() {
-            var derived = new ArrayList<List<Integer>>();
-
-            // create the triangle of values
-            List<Integer> above = readings;
-            // System.out.println(above);
-            while (true) {
-                derived.add(new ArrayList<>());
-                var current = derived.get(derived.size() - 1);
-                for (int i = 1; i < above.size(); i++)
-                    current.add(above.get(i) - above.get(i - 1));
-                // System.out.println(current);
-                if (current.stream().allMatch(v -> v == 0))
-                    break;
-                above = current;
-            }
+            List<Integer> above;
+            var derived = buildDerivedReadings();
 
             // create the next values
             derived.get(derived.size() - 1).add(0);
@@ -52,6 +39,22 @@ public class Day9 {
         }
 
         public int previousValue() {
+            List<Integer> above;
+            var derived = buildDerivedReadings();
+
+            // create the previous values
+            derived.get(derived.size() - 1).add(0, 0);
+            for (int i = derived.size() - 2; i >= 0; --i) {
+                var current = derived.get(i);
+                above = derived.get(i + 1);
+                Integer newValue = current.get(0) - above.get(0);
+                current.add(0, newValue);
+            }
+
+            return readings.get(0) - derived.get(0).get(0);
+        }
+
+        private ArrayList<List<Integer>> buildDerivedReadings() {
             var derived = new ArrayList<List<Integer>>();
 
             // create the triangle of values
@@ -67,17 +70,7 @@ public class Day9 {
                     break;
                 above = current;
             }
-
-            // create the next values
-            derived.get(derived.size() - 1).add(0, 0);
-            for (int i = derived.size() - 2; i >= 0; --i) {
-                var current = derived.get(i);
-                above = derived.get(i + 1);
-                Integer newValue = current.get(0) - above.get(0);
-                current.add(0, newValue);
-            }
-
-            return readings.get(0) - derived.get(0).get(0);
+            return derived;
         }
 
         public static long sumOfNextValues(List<Reading> readings) {
@@ -91,10 +84,8 @@ public class Day9 {
 
     public static void main(String[] args) throws IOException {
         var readings = Reading.parse(Files.readString(Path.of("testdata/day9.dat")));
-        long part1 = Reading.sumOfNextValues(readings);
-        System.out.println("day 9 part 1: " + part1);
-        long part2 = Reading.sumOfPreviousValues(readings);
-        System.out.println("day 9 part 2: " + part2);
+        System.out.println("day 9 part 1: " + Reading.sumOfNextValues(readings));
+        System.out.println("day 9 part 2: " + Reading.sumOfPreviousValues(readings));
     }
 
 }
