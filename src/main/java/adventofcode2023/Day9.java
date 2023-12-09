@@ -22,14 +22,13 @@ public class Day9 {
         }
 
         public int nextValue() {
-            List<Integer> above;
             var derived = buildDerivedReadings();
 
             // create the next values
             derived.get(derived.size() - 1).add(0);
             for (int i = derived.size() - 2; i >= 0; --i) {
                 var current = derived.get(i);
-                above = derived.get(i + 1);
+                var above = derived.get(i + 1);
                 Integer newValue = current.get(current.size() - 1) + above.get(above.size() - 1);
                 current.add(newValue);
             }
@@ -39,14 +38,13 @@ public class Day9 {
         }
 
         public int previousValue() {
-            List<Integer> above;
             var derived = buildDerivedReadings();
 
             // create the previous values
             derived.get(derived.size() - 1).add(0, 0);
             for (int i = derived.size() - 2; i >= 0; --i) {
                 var current = derived.get(i);
-                above = derived.get(i + 1);
+                var above = derived.get(i + 1);
                 Integer newValue = current.get(0) - above.get(0);
                 current.add(0, newValue);
             }
